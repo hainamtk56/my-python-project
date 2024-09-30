@@ -1,31 +1,12 @@
+Jenkinsfile (Declarative Pipeline)
 /* Requires the Docker Pipeline plugin */
 pipeline {
-    agent any
-    
+    agent { docker { image 'python:3.12.6-alpine3.20' } }
     stages {
-        stage('Install dependencies') {
+        stage('build') {
             steps {
-                script {
-                    echo 'Installing dependencies...'
-                    sh 'pip install -r requirements.txt'
-                }
+                sh 'python --version'
             }
-        }
-        stage('Run Tests') {
-            steps {
-                script {
-                    echo 'Running tests...'
-                    sh 'python -m unittest discover -s tests'
-                }
-            }
-        }
-    }
-    post {
-        success {
-            echo 'Pipeline completed successfully!!'
-        }
-        failure {
-            echo 'Pipeline failed.'
         }
     }
 }
